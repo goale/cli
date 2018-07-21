@@ -13,6 +13,11 @@ exports.builder =
           type: 'string',
           demandOption: true
         })
+        .option('typescript', {
+          describe: 'Generate TypeScript version of migration',
+          alias: 'ts',
+          default: false
+        })
     )
       .help()
       .argv;
@@ -20,16 +25,21 @@ exports.builder =
 exports.handler = function (args) {
   helpers.init.createMigrationsFolder();
 
+  const extension = args.typescript ? 'ts' : 'js';
+  const migrationPath = helpers.path.getMigrationPath(args.name, {
+    extension
+  });
+
   fs.writeFileSync(
-    helpers.path.getMigrationPath(args.name),
-    helpers.template.render('migrations/skeleton.js', {}, {
+    migrationPath,
+    helpers.template.render(`migrations/skeleton.${extension}`, {}, {
       beautify: false
     })
   );
 
   helpers.view.log(
     'New migration was created at',
-    clc.blueBright(helpers.path.getMigrationPath(args.name)),
+    clc.blueBright(migrationPath),
     '.'
   );
 

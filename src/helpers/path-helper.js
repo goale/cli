@@ -46,16 +46,16 @@ module.exports = {
     );
   },
 
-  getFileExtension () {
-    return 'js';
+  getFileExtension (options = {}) {
+    return options.extension || 'js';
   },
 
   addFileExtension (basename, options) {
     return [basename, this.getFileExtension(options)].join('.');
   },
 
-  getMigrationPath (migrationName) {
-    return path.resolve(this.getPath('migration'), this.getFileName('migration', migrationName));
+  getMigrationPath (migrationName, options) {
+    return path.resolve(this.getPath('migration'), this.getFileName('migration', migrationName, options));
   },
 
   getSeederPath (seederName) {
