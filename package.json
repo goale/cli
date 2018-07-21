@@ -30,6 +30,7 @@
     "pg": "^7.*",
     "pg-hstore": "^2.x",
     "sequelize": "^4.x",
+    "sequelize-typescript": "^0.6.5",
     "sqlite3": "^3.x",
     "through2": "^2.0.3"
   },
